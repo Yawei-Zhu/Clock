@@ -24,7 +24,8 @@ public class AlarmAdapter extends BaseAdapter<Alarm, AlarmAdapter.ViewHolder> {
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             if(mSwitchCheckedChangedListener != null) {
-                mSwitchCheckedChangedListener.onCheckedChange(getParent(), (Switch)compoundButton, (Alarm)compoundButton.getTag(), b);
+                mSwitchCheckedChangedListener.onCheckedChange(getParent(),
+                        (Switch)compoundButton, (Alarm)compoundButton.getTag(), b);
             }
         }
     };
@@ -46,7 +47,6 @@ public class AlarmAdapter extends BaseAdapter<Alarm, AlarmAdapter.ViewHolder> {
         holder.mRepeatedTv.setText(alarm.isRepeated() ? "每天" : "一次");
         holder.mEnableSwitch.setChecked(alarm.isEnable());
         holder.mEnableSwitch.setTag(alarm);
-        holder.mEnableSwitch.setOnCheckedChangeListener(mCheckedChangedListener);
     }
 
     public class ViewHolder extends BaseAdapter.BaseViewHolder {
@@ -63,6 +63,7 @@ public class AlarmAdapter extends BaseAdapter<Alarm, AlarmAdapter.ViewHolder> {
             mTimeTv = (TextView) itemView.findViewById(R.id.tv_alarm_time);
             mRepeatedTv = (TextView) itemView.findViewById(R.id.tv_alarm_repeated);
             mEnableSwitch = (Switch) itemView.findViewById(R.id.sw_alarm_enable);
+            mEnableSwitch.setOnCheckedChangeListener(mCheckedChangedListener);
         }
     }
 

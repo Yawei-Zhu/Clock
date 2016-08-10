@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
+ * @author Yawei-Zhu
  * Created by A Dreamer on 2016/8/3.
  */
 public abstract class BaseAdapter<E, H extends BaseAdapter.BaseViewHolder> extends  RecyclerView.Adapter<H>  {
@@ -20,12 +21,20 @@ public abstract class BaseAdapter<E, H extends BaseAdapter.BaseViewHolder> exten
         mData = data;
     }
 
+    /**
+     * 通过复写该方法获取父控件
+     * @param recyclerView
+     */
     @Override
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
         mParent = recyclerView;
         super.onDetachedFromRecyclerView(recyclerView);
     }
 
+    /**
+     *
+     * @return adapter中data的数量（int）
+     */
     @Override
     public final int getItemCount() {
         return mData.size();
