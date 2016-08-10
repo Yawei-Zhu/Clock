@@ -4,7 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Yawei-Zhu
@@ -16,9 +18,11 @@ public abstract class BaseAdapter<E, H extends BaseAdapter.BaseViewHolder> exten
     private RecyclerView mParent;
     private OnItemClickListener mItemClickListener;
     private OnItemLongClickListener mItemLongClickListener;
+    private Map<View, BaseViewHolder> mViewHolderMap;
 
     public BaseAdapter(List<E> data) {
         mData = data;
+        mViewHolderMap = new HashMap<>();
     }
 
     /**
@@ -73,7 +77,7 @@ public abstract class BaseAdapter<E, H extends BaseAdapter.BaseViewHolder> exten
         @Override
         public void onClick(View view) {
             if(mItemClickListener != null) {
-                mItemClickListener.onClick(mParent, view, ((BaseViewHolder)view.getTag()).getAdapterPosition());
+                mItemClickListener.onClick(mParent, view, mViewHolderMap.get(view).getAdapterPosition());
             }
         }
     };
@@ -83,7 +87,7 @@ public abstract class BaseAdapter<E, H extends BaseAdapter.BaseViewHolder> exten
         public boolean onLongClick(View view) {
             if(mItemLongClickListener != null) {
                 return mItemLongClickListener
-                        .onLongClick(mParent, view, ((BaseViewHolder)view.getTag()).getAdapterPosition());
+                        .onLongClick(mParent, view, mViewHolderMap.get(view).getAdapterPosition());
             }
             return false;
         }
@@ -91,13 +95,18 @@ public abstract class BaseAdapter<E, H extends BaseAdapter.BaseViewHolder> exten
 
     public class BaseViewHolder extends  RecyclerView.ViewHolder {
 
+        private View mItemView;
+
         public BaseViewHolder(View itemView) {
             super(itemView);
-
-            itemView.setTag(this);
+            mItemView = itemView;
+            mViewHolderMap.put(itemView, this);
             itemView.setOnClickListener(onItemViewClickListener);
             itemView.setOnLongClickListener(onItemViewLongClickListener);
         }
 
+        public View getItemView() {
+            return mItemView;
+        }
     }
 }

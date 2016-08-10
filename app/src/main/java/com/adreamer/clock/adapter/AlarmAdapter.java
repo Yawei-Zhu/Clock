@@ -42,7 +42,6 @@ public class AlarmAdapter extends BaseAdapter<Alarm, AlarmAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Alarm alarm = getData().get(position);
-        holder.mItemView.setTag(position);
         holder.mTimeTv.setText(FormatUtils.format(alarm.getTime()));
         holder.mRepeatedTv.setText(alarm.isRepeated() ? "每天" : "一次");
         holder.mEnableSwitch.setChecked(alarm.isEnable());
@@ -51,7 +50,6 @@ public class AlarmAdapter extends BaseAdapter<Alarm, AlarmAdapter.ViewHolder> {
 
     public class ViewHolder extends BaseAdapter.BaseViewHolder {
 
-        public View mItemView;
         public TextView mTimeTv;
         public TextView mRepeatedTv;
         public Switch mEnableSwitch;
@@ -59,7 +57,6 @@ public class AlarmAdapter extends BaseAdapter<Alarm, AlarmAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
 
-            mItemView = itemView;
             mTimeTv = (TextView) itemView.findViewById(R.id.tv_alarm_time);
             mRepeatedTv = (TextView) itemView.findViewById(R.id.tv_alarm_repeated);
             mEnableSwitch = (Switch) itemView.findViewById(R.id.sw_alarm_enable);
